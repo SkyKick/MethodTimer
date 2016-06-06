@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MethodTimer.Fody;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -37,7 +38,7 @@ public partial class ModuleWeaver
             {
                 continue;
             }
-            if (type.ContainsTimeAttribute())
+            if (type.ContainsTimeAttribute() || type.MatchesPointcuts(Configuration.PointcutRegex))
             {
                 foreach (var method in type.ConcreteMethods())
                 {

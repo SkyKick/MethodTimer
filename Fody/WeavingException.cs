@@ -7,4 +7,9 @@ public class WeavingException : Exception
     {
 
     }
+
+    public WeavingException(string message, Exception inner)
+      : base(message, inner)
+    {
+    }
 }

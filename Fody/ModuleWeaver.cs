@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
+using MethodTimer.Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -17,6 +19,8 @@ public partial class ModuleWeaver
     public IAssemblyResolver AssemblyResolver { get; set; }
     List<TypeDefinition> types;
     public List<string> ReferenceCopyLocalPaths { get; set; }
+    public XElement Config { get; set; }
+    private Configuration Configuration { get; set; }
 
     public ModuleWeaver()
     {
@@ -28,6 +32,8 @@ public partial class ModuleWeaver
         LogErrorPoint = (s, p) => { Debug.WriteLine(s); };
 
         ReferenceCopyLocalPaths = new List<string>();
+
+        Configuration = new Configuration(this.Config);
     }
 
     public void Execute()

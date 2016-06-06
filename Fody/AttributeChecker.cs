@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using Mono.Cecil;
 
 public static class AttributeChecker
@@ -9,6 +10,12 @@ public static class AttributeChecker
 
         return customAttributes.Any(x => x.AttributeType.Name == "TimeAttribute");
     }
+
+    public static bool MatchesPointcuts(this TypeDefinition definition, Regex pointcutRegex)
+    {
+        return pointcutRegex.IsMatch(definition.FullName);
+    }
+
     public static bool IsCompilerGenerated(this ICustomAttributeProvider definition)
     {
         var customAttributes = definition.CustomAttributes;
